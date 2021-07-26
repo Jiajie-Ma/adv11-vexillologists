@@ -151,12 +151,6 @@ class DEDlattice:
                     result.append(((d - 1, cd, cf), (d, ed, ef)))
         return result
 
-    # compute the cover relations for the simplified DEF lattice of a Kunz polyhedron
-    # @Ps: list of all posets for a kunz polyhedron (read from dataset)
-    # output: cover relations for the DEF lattice, stored in the following format:
-    #         a list of 2-tuples ((d1,n1), (d2,n2)), where (d2,n2) covers (d1,n1)
-    #         d1 is the face dimension of the *child* poset, and n1 the number of its defining facet equations
-    #         Similar for (d2, n2)
     def relation_poset(self):
         """Compute the cover relations for the simplified DEF lattice of the Kunz polyhedron,
         without embedding dimension.
