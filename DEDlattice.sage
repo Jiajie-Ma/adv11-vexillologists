@@ -221,6 +221,18 @@ class DEDlattice:
                     return cd[i][0]
             return False
 
+    def plot_ed_lattice(self):
+        """Plots the ED lattice.
+        """
+        cover_relations = self.ed_poset()
+        return FinitePoset(DiGraph(cover_relations).transitive_reduction()).plot()
+
+    def plot_ef_lattice(self):
+        """Plots the EF lattice.
+        """
+        cover_relations = self.ef_poset()
+        return FinitePoset(DiGraph(cover_relations).transitive_reduction()).plot()
+
     # this function is *supposed* to find a flag that contains the maximal jump of embedding dimension
     # (in consturction or unnecessary for now)
     def find_maximal_flag(self):
