@@ -26,7 +26,8 @@ class DEDlattice:
         :return: if p1 is a refinement of p2
         :rtype: bool
         """
-        if isinstance(p1, sage.rings.integer.Integer) and isinstance(p2, sage.rings.integer.Integer):
+        if (isinstance(p1, sage.rings.integer.Integer) and isinstance(p2, sage.rings.integer.Integer))\
+                or (isinstance(p1, int) and isinstance(p2, int)):
             r1 = self.ps[p1].hyperplane_desc
             r2 = self.ps[p2].hyperplane_desc
         else:
@@ -62,7 +63,7 @@ class DEDlattice:
         :return: list of integers, representing positions of corresponding posets
         :rtype: list
         """
-        if isinstance(p, sage.rings.integer.Integer):
+        if isinstance(p, sage.rings.integer.Integer) or isinstance(p, int):
             p = self.ps[p]
         result = []
         d = p.Dimension()
@@ -82,7 +83,7 @@ class DEDlattice:
         :return: list of poset indices, embedding dimensions and #(def. facet equations)
         :rtype: list of 3-tuples (i, e, n)
         """
-        if isinstance(p, sage.rings.integer.Integer):
+        if isinstance(p, sage.rings.integer.Integer) or isinstance(p, int):
             p = self.ps[p]
         result = []
         d = p.Dimension()
@@ -101,11 +102,10 @@ class DEDlattice:
         :return: list of poset indices and #added facet equations
         :rtype: list of 2-tuples (i,n)
         """
-        if isinstance(p, sage.rings.integer.Integer):
+        if isinstance(p, sage.rings.integer.Integer) or isinstance(p, int):
             p = self.ps[p]
         result = []
         d = p.Dimension()
-        n = len(p.hyperplane_desc)      # Is this supposed to do something?
         for i in self.pd[d - 1]:
             if self.check_refinement(self.ps[i], p):
                 result.append((i, len(self.ps[i].hyperplane_desc)))
@@ -124,7 +124,6 @@ class DEDlattice:
             p = self.ps[i]
             d = p.Dimension()
             ed = len(p.atoms)
-            ef = len(p.hyperplane_desc)     # Is this supposed to do something?
             lchild = self.child_ed(p)
             for (c, cd, cf) in lchild:
                 if ((d - 1, cd), (d, ed)) not in result:
@@ -213,13 +212,13 @@ class DEDlattice:
         :return: the index of the found poset, or False if not possible
         :rtype: int or bool
         """
-        if isinstance(p, sage.rings.integer.Integer):
+        if isinstance(p, sage.rings.integer.Integer) or isinstance(p, int):
             p = self.ps[p]
-            cd = self.child_ed(p)
-            for i in range(len(cd)):
-                if cd[i][2] - (len(p.hyperplane_desc)) == 1:
-                    return cd[i][0]
-            return False
+        cd = self.child_ed(p)
+        for i in range(len(cd)):
+            if cd[i][2] - (len(p.hyperplane_desc)) == 1:
+                return cd[i][0]
+        return False
 
     def plot_ed_lattice(self, size=8):
         """Plots the ED lattice.
